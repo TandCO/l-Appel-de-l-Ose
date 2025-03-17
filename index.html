@@ -142,7 +142,7 @@ function setQuestion(index) {
 
         for (let i = 0; i < choices[profile][index].length; i++) {
             let btn = document.createElement("button");
-            btn.innerText = choices[profile][index][i];
+            btn.innerText = choices[profile][index][i]; // Maintenant, ça affiche bien le texte de la réponse
             btn.onclick = () => selectAnswer(["A", "B", "C"][i]);
             buttons.appendChild(btn);
         }
