@@ -83,12 +83,9 @@
         </div>
         
         <div id="step2" class="question">
-            <h3 id="question"></h3>
-            <button onclick="selectAnswer('A')">Option A</button>
-            <button onclick="selectAnswer('B')">Option B</button>
-            <button onclick="selectAnswer('C')">Option C</button>
-        </div>
-        
+    <h3 id="question"></h3>
+    <div id="choices"></div> <!-- Cet élément affichera les réponses dynamiquement -->
+</div>        
         <div id="result" class="result">
             <h3>Votre révélation :</h3>
             <p id="reveal"></p>
@@ -140,12 +137,18 @@ function setQuestion(index) {
         let buttons = document.getElementById("choices");
         buttons.innerHTML = ""; // On vide les boutons précédents
 
-        for (let i = 0; i < choices[profile][index].length; i++) {
-            let btn = document.createElement("button");
-            let labels = ["A", "B", "C"];
-btn.innerText = `${labels[i]}. ${choices[profile][index][labels[i]]}`; // Maintenant, ça affiche bien le texte de la réponse
-            btn.onclick = () => selectAnswer(["A", "B", "C"][i]);
-            buttons.appendChild(btn);
+let buttons = document.getElementById("choices");
+buttons.innerHTML = ""; // On vide les anciens boutons
+
+let labels = ["A", "B", "C"];
+let choicesList = choices[profile][index];
+
+labels.forEach((label) => {
+    let btn = document.createElement("button");
+    btn.innerText = `${label}. ${choicesList[label]}`; // Affiche le texte de réponse correct
+    btn.onclick = () => selectAnswer(label); // Stocke directement "A", "B" ou "C"
+    buttons.appendChild(btn);
+});
         }
     } else {
         showResult();
@@ -192,4 +195,3 @@ function showResult() {
     </script>
 </body>
 </html>
-
