@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Défi de l’Ose</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #3d4b3a;
+            color: #e5c07b;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+        }
+        .question, .result {
+            display: none;
+        }
+        button {
+            background-color: #e5c07b;
+            color: #3d4b3a;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #d4a857;
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        .background {
+            background: url('background-nature.jpg') no-repeat center center/cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <img src="logo-tco.png" class="logo" alt="Logo T&Co">
+        <h2>Bienvenue dans Le Défi de l’Ose !</h2>
+        <p>Un jeu pour révéler ce que vous devez oser.</p>
+        
+        <div id="step1">
+            <h3>Qui êtes-vous ?</h3>
+            <button onclick="chooseProfile('leader')">Un responsable d’équipe</button>
+            <button onclick="chooseProfile('explorateur')">Un individu en quête de changement</button>
+            <button onclick="chooseProfile('compagnon')">Un membre d’un groupe d’amis</button>
+        </div>
+        
+        <div id="step2" class="question">
+            <h3 id="question"></h3>
+            <button onclick="selectAnswer('A')">Option A</button>
+            <button onclick="selectAnswer('B')">Option B</button>
+            <button onclick="selectAnswer('C')">Option C</button>
+        </div>
+        
+        <div id="result" class="result">
+            <h3>Votre révélation :</h3>
+            <p id="reveal"></p>
+            <p>Félicitations ! Vous avez gagné le droit de me contacter.</p>
+            <button onclick="contactMe()">Parlons-en !</button>
+        </div>
+    </div>
+
+    <script>
+        let profile = "";
+        let answers = [];
+
+        function chooseProfile(selected) {
+            profile = selected;
+            document.getElementById("step1").style.display = "none";
+            document.getElementById("step2").style.display = "block";
+            setQuestion(0);
+        }
+
+        function setQuestion(index) {
+            const questions = {
+                leader: [
+                    "Si votre équipe pouvait vous dire une seule chose en toute sincérité, qu’aimeriez-vous entendre ?",
+                    "Si chaque personne de votre équipe osait exprimer librement ses idées, qu’est-ce qui changerait immédiatement ?",
+                    "Quelle est la dernière fois où vous avez donné une reconnaissance sincère à un membre de votre équipe ?"
+                ],
+                explorateur: [
+                    "Si vous étiez sûr(e) de ne pas échouer, que tenteriez-vous dès demain ?",
+                    "Quelle est la toute petite action que vous pourriez faire aujourd’hui pour amorcer un changement ?",
+                    "Si votre vous du futur pouvait vous donner un conseil aujourd’hui, que vous dirait-il ?"
+                ],
+                compagnon: [
+                    "Quand avez-vous ri aux éclats pour la dernière fois avec vos amis, et que faudrait-il pour que cela arrive plus souvent ?",
+                    "Quel est le souvenir le plus marquant que vous avez vécu avec vos amis, et pourquoi ?",
+                    "Si vous pouviez dire une chose sincère à chacun de vos amis, qu’est-ce que ce serait ?"
+                ]
+            };
+            document.getElementById("question").innerText = questions[profile][index];
+        }
+
+        function selectAnswer(choice) {
+            answers.push(choice);
+            if (answers.length < 3) {
+                setQuestion(answers.length);
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("step2").style.display = "none";
+            document.getElementById("result").style.display = "block";
+            document.getElementById("reveal").innerText = "Votre phrase révélatrice : " + generatePhrase();
+        }
+
+        function generatePhrase() {
+            const words = {
+                A: "Création",
+                B: "Mouvement",
+                C: "Confiance"
+            };
+            return words[answers[0]] + " - " + words[answers[1]] + " - " + words[answers[2]];
+        }
+
+        function contactMe() {
+            window.location.href = "mailto:t.co@outlook.fr";
+        }
+    </script>
+</body>
+</html>
