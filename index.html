@@ -79,7 +79,7 @@
             <h3>Qui êtes-vous ?</h3>
             <button onclick="chooseProfile('leader')">Un responsable d’équipe</button>
             <button onclick="chooseProfile('explorateur')">Un individu en quête de changement</button>
-            <button onclick="chooseProfile('compagnon')">Un membre d’un groupe d’amis</button>
+            <button onclick="chooseProfile('compagnon')">Le membre d’un groupe d’amis ou d'une équipe</button>
         </div>
         
         <div id="step2" class="question">
@@ -118,6 +118,15 @@ const questions = {
         "Après réflexion, vous êtes prêt(e) à passer à l’action. Quelle est votre prochaine étape ?",
         "Et si le jeu pouvait être un levier puissant pour évoluer et oser pleinement votre transformation ?"
     ]
+
+    compagnon: [
+        "Vous souhaitez organiser un moment spécial avec votre groupe d'amis ou votre équipe. Que proposez-vous ?",
+        "Deux personnes de votre groupe sont en désaccord et cela crée une tension. Comment réagissez-vous ?",
+        "Vous ressentez un besoin d’être plus entendu(e) dans le groupe. Comment abordez-vous cela ?",
+        "Vous avez une idée originale à proposer au groupe, mais vous hésitez. Que faites-vous ?",
+        "Vous souhaitez renforcer les liens et l’énergie du groupe sur le long terme. Quelle approche adoptez-vous ?"
+    "En quoi l’accompagnement d’un coach utilisant le jeu pourrait-il renforcer vos liens, vous assurer un réseau solide et durable, et vous aider à concrétiser ensemble les projets qui vous tiennent à cœur ?"
+    ]
 };
 
 // Définition des réponses possibles
@@ -137,6 +146,15 @@ const choices = {
         { A: "J’accepte immédiatement, quitte à apprendre en chemin.", B: "Je prends le temps d’évaluer les risques et avantages.", C: "Je décline car cela me semble trop incertain." },
         { A: "J’établis un plan concret avec des objectifs clairs.", B: "J’annonce mon projet à mon entourage pour me sentir engagé(e).", C: "Je me laisse encore un peu de temps avant d’agir." },
         { A: "Oui, et cela me donne envie de tester cette approche.", B: "Je n’y avais pas pensé, mais je suis intrigué(e).", C: "Non, mais peut-être est-il temps d’essayer." }
+    ]
+
+    compagnon: [
+        { A: "Une activité où tout le monde doit coopérer pour réussir.", B: "Un moment d’échange profond où chacun partage un souvenir marquant.", C: "Un simple dîner ou une sortie sans prise de tête." },
+        { A: "Je propose une activité ludique pour détendre l’atmosphère et relâcher la pression.", B: "Je les encourage à discuter calmement et à trouver un terrain d’entente.", C: "J’attends que le temps fasse son travail sans m’en mêler." },
+        { A: "Je crée un moment pour partager mes ressentis et écouter ceux des autres.", B: "J’adapte ma manière de communiquer pour m’assurer que mon message passe mieux.", C: "Je n’en parle pas et je prends du recul pour voir si cela passe." },
+        { A: "Je lance mon idée sans attendre et j’observe les réactions.", B: "Je teste mon idée avec une ou deux personnes avant de la proposer au groupe.", C: "Je préfère attendre un moment plus opportun." },
+        { A: "J’intègre des moments de jeu et de surprise pour créer du lien.", B: "Je propose des discussions régulières sur ce qui est important pour chacun.", C: "Je laisse le groupe évoluer naturellement et je m’adapte." }
+    { A: "Oui, j’aimerais découvrir comment cela pourrait impacter notre dynamique.", B: "Je n’y avais pas pensé, mais c’est une piste qui mérite réflexion.", C: "Cela me semble peu probable qu’un coach puisse accompagner un groupe d’amis ou le membre d’une équipe." }
     ]
 };
 
@@ -206,6 +224,16 @@ function showResult() {
             finalMessage = "Le changement ne se produit pas en restant spectateur. Osez poser la première pierre de votre transformation dès aujourd’hui.";
         } else {
             finalMessage = "Vous explorez le changement sous plusieurs angles. Osez maintenant identifier ce qui vous inspire vraiment et vous engager pleinement.";
+        }
+    } else if (profile === "compagnon") {
+        if (countA > countB && countA > countC) {
+            finalMessage = "Vous êtes un moteur dans votre groupe. Osez continuer à créer des moments forts et des opportunités de connexion qui inspirent et unissent.";
+        } else if (countB > countA && countB > countC) {
+            finalMessage = "Vous avez une approche subtile et attentive des relations. Osez parfois proposer des changements, car votre regard peut enrichir encore plus votre groupe.";
+        } else if (countC > countA && countC > countB) {
+            finalMessage = "Votre capacité à observer et laisser les choses évoluer est précieuse. Osez parfois prendre plus d’initiative pour apporter votre touche et influencer positivement la dynamique du groupe.";
+        } else {
+            finalMessage = "Vous jouez un rôle équilibré dans votre groupe. Osez maintenant identifier ce qui vous fait vibrer le plus et cultivez-le pour renforcer encore plus vos relations.";
         }
     }
 
