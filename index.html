@@ -100,60 +100,93 @@
     </div>
 
     <script>
-        let profile = "";
-        let answers = [];
+        let profile = "leader";  // On travaille pour l'instant sur la catégorie "Responsable d'Équipe"
+let answers = [];
 
-        function chooseProfile(selected) {
-            profile = selected;
-            document.getElementById("step1").style.display = "none";
-            document.getElementById("step2").style.display = "block";
-            setQuestion(0);
-        }
+// Définition des scénarios et de leur nouvel ordre
+const questions = {
+    leader: [
+        "Vous venez d’être nommé(e) responsable d’équipe. Quelle première action mettez-vous en place ?",
+        "Vous sentez que la confiance au sein de votre équipe pourrait être renforcée. Que faites-vous ?",
+        "L’un de vos collaborateurs a une idée révolutionnaire mais hésite à la partager. Comment réagissez-vous ?",
+        "Vous êtes en réunion et percevez des tensions sous-jacentes. Comment abordez-vous la situation ?",
+        "Un membre de votre équipe a réalisé un excellent travail. Comment choisissez-vous de le reconnaître ?"
+    ]
+};
 
-        function setQuestion(index) {
-            const questions = {
-                leader: [
-                    "Si votre équipe pouvait vous dire une seule chose en toute sincérité, qu’aimeriez-vous entendre ?",
-                    "Si chaque personne de votre équipe osait exprimer librement ses idées, qu’est-ce qui changerait immédiatement ?",
-                    "Quelle est la dernière fois où vous avez donné une reconnaissance sincère à un membre de votre équipe ?"
-                ],
-                explorateur: [
-                    "Si vous étiez sûr(e) de ne pas échouer, que tenteriez-vous dès demain ?",
-                    "Quelle est la toute petite action que vous pourriez faire aujourd’hui pour amorcer un changement ?",
-                    "Si votre vous du futur pouvait vous donner un conseil aujourd’hui, que vous dirait-il ?"
-                ],
-                compagnon: [
-                    "Quand avez-vous ri aux éclats pour la dernière fois avec vos amis, et que faudrait-il pour que cela arrive plus souvent ?",
-                    "Quel est le souvenir le plus marquant que vous avez vécu avec vos amis, et pourquoi ?",
-                    "Si vous pouviez dire une chose sincère à chacun de vos amis, qu’est-ce que ce serait ?"
-                ]
-            };
-            document.getElementById("question").innerText = questions[profile][index];
-        }
+// Définition des réponses possibles
+const choices = {
+    leader: [
+        ["J’organise des entretiens individuels avec chaque membre.", "Je réunis toute l’équipe et partage ma vision.", "J’observe d’abord avant d’agir."],
+        ["J’organise un échange ouvert.", "J’observe et analyse discrètement.", "Je laisse le temps faire son œuvre."],
+        ["Je l’encourage à partager publiquement son idée.", "Je l’aborde discrètement après la réunion.", "Je lui dis qu’on en reparlera plus tard."],
+        ["J’interromps la réunion et demande ce qui ne va pas.", "J’observe et repère les signaux faibles.", "Je poursuis la réunion sans changement."],
+        ["Je félicite immédiatement devant toute l’équipe.", "Je lui envoie un message personnel.", "Je reporte le feedback à plus tard."]
+    ]
+};
 
-        function selectAnswer(choice) {
-            answers.push(choice);
-            if (answers.length < 3) {
-                setQuestion(answers.length);
-            } else {
-                showResult();
-            }
-        }
+// Affichage de la première question
+function chooseProfile() {
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
+    setQuestion(0);
+}
 
-        function showResult() {
-            document.getElementById("step2").style.display = "none";
-            document.getElementById("result").style.display = "block";
-            document.getElementById("reveal").innerText = "Votre phrase révélatrice : " + generatePhrase();
-        }
+// Fonction pour afficher les questions et les choix
+function setQuestion(index) {
+    if (index < questions[profile].length) {
+        document.getElementById("question").innerText = questions[profile][index];
 
-        function generatePhrase() {
-            const words = {
-                A: "Création",
-                B: "Mouvement",
-                C: "Confiance"
-            };
-            return words[answers[0]] + " - " + words[answers[1]] + " - " + words[answers[2]];
+        let buttons = document.getElementById("choices");
+        buttons.innerHTML = ""; // On vide les boutons précédents
+
+        for (let i = 0; i < choices[profile][index].length; i++) {
+            let btn = document.createElement("button");
+            btn.innerText = choices[profile][index][i];
+            btn.onclick = () => selectAnswer(["A", "B", "C"][i]);
+            buttons.appendChild(btn);
         }
+    } else {
+        showResult();
+    }
+}
+
+// Fonction qui enregistre la réponse et passe à la question suivante
+function selectAnswer(choice) {
+    answers.push(choice);
+    setQuestion(answers.length);
+}
+
+// Fonction qui génère la phrase révélatrice dynamique
+function showResult() {
+    document.getElementById("step2").style.display = "none";
+    document.getElementById("result").style.display = "block";
+
+    let countA = answers.filter(a => a === "A").length;
+    let countB = answers.filter(a => a === "B").length;
+    let countC = answers.filter(a => a === "C").length;
+
+    let finalMessage = "";
+
+    if (countA > countB && countA > countC) {
+        finalMessage = "Osez prendre les décisions qui comptent et transformer l’énergie en action.";
+    } else if (countB > countA && countB > countC) {
+        finalMessage = "Osez aller au-delà de l’analyse et faire confiance à votre intuition.";
+    } else if (countC > countA && countC > countB) {
+        finalMessage = "Osez sortir de l’attente et provoquer le changement.";
+    } else {
+        finalMessage = "Osez explorer de nouvelles approches pour affirmer votre leadership.";
+    }
+
+    let revealElement = document.getElementById("reveal");
+    revealElement.innerText = finalMessage;
+    revealElement.style.opacity = "0";
+    
+    setTimeout(() => {
+        revealElement.style.transition = "opacity 2s";
+        revealElement.style.opacity = "1";
+    }, 500);
+}
 
     </script>
 </body>
