@@ -85,7 +85,9 @@
         <div id="step2" class="question">
     <h3 id="question"></h3>
     <div id="choices"></div> <!-- Cet élément affichera les réponses dynamiquement -->
-</div>        
+</div>  
+        <!-- Bouton de retour -->
+<button id="backButton" onclick="goBack()" style="display: none;">Retour</button>
         <div id="result" class="result">
             <h3>Votre révélation :</h3>
             <p id="reveal"></p>
@@ -163,7 +165,24 @@ function chooseProfile(selectedProfile) {
     profile = selectedProfile; // Met à jour le profil choisi
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
+    document.getElementById("backButton").style.display = "block"; // Afficher le bouton retour
     setQuestion(0);
+}
+
+        // Go Back function du bouton retour en arrière
+        function goBack() {
+    if (document.getElementById("step2").style.display === "block") {
+        // Si on est dans une question autre que la première, revenir à la question précédente
+        if (answers.length > 0) {
+            answers.pop(); // Supprime la dernière réponse enregistrée
+            setQuestion(answers.length); // Revient à la question précédente
+        } else {
+            // Si c'est la première question, revenir au choix des profils
+            document.getElementById("step2").style.display = "none";
+            document.getElementById("step1").style.display = "block";
+            document.getElementById("backButton").style.display = "none"; // Cache le bouton retour
+        }
+    }
 }
 
 // Fonction pour afficher les questions et les choix
@@ -198,6 +217,7 @@ function selectAnswer(choice) {
 function showResult() {
     document.getElementById("step2").style.display = "none";
     document.getElementById("result").style.display = "block";
+    document.getElementById("backButton").style.display = "none"; // Cacher le bouton retour
 
     let countA = answers.filter(a => a === "A").length;
     let countB = answers.filter(a => a === "B").length;
