@@ -107,7 +107,16 @@ const questions = {
         "Vous sentez que la confiance au sein de votre équipe pourrait être renforcée. Que faites-vous ?",
         "L’un de vos collaborateurs a une idée révolutionnaire mais hésite à la partager. Comment réagissez-vous ?",
         "Vous êtes en réunion et percevez des tensions sous-jacentes. Comment abordez-vous la situation ?",
-        "Un membre de votre équipe a réalisé un excellent travail. Comment choisissez-vous de le reconnaître ?"
+        "Un membre de votre équipe a réalisé un excellent travail. Comment choisissez-vous de le reconnaître ?",
+        "Avez-vous déjà envisagé que le coaching par le jeu et l’expérience pouvaient révolutionner la coopération dans votre équipe ?"
+    ],
+    explorateur: [
+        "Vous sentez qu’un changement est nécessaire dans votre vie professionnelle. Quelle première action entreprenez-vous ?",
+        "Vous hésitez à quitter votre poste actuel, par peur de l’inconnu. Que faites-vous ?",
+        "Votre entourage exprime des doutes sur votre volonté de changement. Comment réagissez-vous ?",
+        "On vous propose une opportunité excitante, mais totalement nouvelle pour vous. Quelle est votre réaction ?",
+        "Après réflexion, vous êtes prêt(e) à passer à l’action. Quelle est votre prochaine étape ?",
+        "Et si le jeu pouvait être un levier puissant pour évoluer et oser pleinement votre transformation ?"
     ]
 };
 
@@ -118,7 +127,16 @@ const choices = {
         { A: "J’organise un échange ouvert.", B: "J’observe et analyse discrètement.", C: "Je laisse le temps faire son œuvre." },
         { A: "Je l’encourage à partager publiquement son idée.", B: "Je l’aborde discrètement après la réunion.", C: "Je lui dis qu’on en reparlera plus tard." },
         { A: "J’interromps la réunion et demande ce qui ne va pas.", B: "J’observe et repère les signaux faibles.", C: "Je poursuis la réunion sans changement." },
-        { A: "Je félicite immédiatement devant toute l’équipe.", B: "Je lui envoie un message personnel.", C: "Je reporte le feedback à plus tard." }
+        { A: "Je félicite immédiatement devant toute l’équipe.", B: "Je lui envoie un message personnel.", C: "Je reporte le feedback à plus tard." },
+        { A: "Oui, et je suis curieux(se) d’explorer cette approche.", B: "Pourquoi pas ? J’aimerais en savoir plus.", C: "Non, je n’avais jamais pensé à cela." }
+    ],
+    explorateur: [
+        { A: "Je liste tout ce qui me motive et ce qui me freine.", B: "Je discute avec quelqu’un qui a déjà vécu un changement similaire.", C: "J’attends de voir si une opportunité se présente d’elle-même." },
+        { A: "J’explore les pires scénarios et j’élabore un plan B.", B: "Je cherche à comprendre si cette peur est fondée ou non.", C: "Je laisse couler et j’attends d’être sûr(e)." },
+        { A: "Je leur explique clairement mes motivations et reste ferme sur mon choix.", B: "J’écoute leurs arguments pour voir s’ils ont des points valides.", C: "Je commence à douter et je remets tout en question." },
+        { A: "J’accepte immédiatement, quitte à apprendre en chemin.", B: "Je prends le temps d’évaluer les risques et avantages.", C: "Je décline car cela me semble trop incertain." },
+        { A: "J’établis un plan concret avec des objectifs clairs.", B: "J’annonce mon projet à mon entourage pour me sentir engagé(e).", C: "Je me laisse encore un peu de temps avant d’agir." },
+        { A: "Oui, et cela me donne envie de tester cette approche.", B: "Je n’y avais pas pensé, mais je suis intrigué(e).", C: "Non, mais peut-être est-il temps d’essayer." }
     ]
 };
 
@@ -168,20 +186,32 @@ function showResult() {
 
     let finalMessage = "";
 
-    if (countA > countB && countA > countC) {
-        finalMessage = "Osez prendre les décisions qui comptent et transformer l’énergie en action.";
-    } else if (countB > countA && countB > countC) {
-        finalMessage = "Osez aller au-delà de l’analyse et faire confiance à votre intuition.";
-    } else if (countC > countA && countC > countB) {
-        finalMessage = "Osez sortir de l’attente et provoquer le changement.";
-    } else {
-        finalMessage = "Osez explorer de nouvelles approches pour affirmer votre leadership.";
+    if (profile === "leader") {
+        if (countA > countB && countA > countC) {
+            finalMessage = "Osez prendre les décisions qui comptent et transformer l’énergie en action.";
+        } else if (countB > countA && countB > countC) {
+            finalMessage = "Osez aller au-delà de l’analyse et faire confiance à votre intuition.";
+        } else if (countC > countA && countC > countB) {
+            finalMessage = "Osez sortir de l’attente et provoquer le changement.";
+        } else {
+            finalMessage = "Osez explorer de nouvelles approches pour affirmer votre leadership.";
+        }
+    } else if (profile === "explorateur") {
+        if (countA > countB && countA > countC) {
+            finalMessage = "Vous avez une approche audacieuse du changement. Osez transformer cette énergie en actions concrètes et alignées avec vos aspirations.";
+        } else if (countB > countA && countB > countC) {
+            finalMessage = "Votre capacité à analyser est un atout. Osez maintenant franchir la ligne entre réflexion et passage à l’action.";
+        } else if (countC > countA && countC > countB) {
+            finalMessage = "Le changement ne se produit pas en restant spectateur. Osez poser la première pierre de votre transformation dès aujourd’hui.";
+        } else {
+            finalMessage = "Vous explorez le changement sous plusieurs angles. Osez maintenant identifier ce qui vous inspire vraiment et vous engager pleinement.";
+        }
     }
 
     let revealElement = document.getElementById("reveal");
     revealElement.innerText = finalMessage;
     revealElement.style.opacity = "0";
-    
+
     setTimeout(() => {
         revealElement.style.transition = "opacity 2s";
         revealElement.style.opacity = "1";
