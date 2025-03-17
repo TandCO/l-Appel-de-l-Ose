@@ -15,15 +15,17 @@
             overflow: hidden;
         }
         .container {
-            max-width: 600px;
-            margin: auto;
-            background: rgba(0, 0, 0, 0.6); /* Ajout de fond semi-transparent */
-            color: #d4a857; /* Texte en doré */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 10;
+           
+    max-width: 600px;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.6); /* Ajout de fond semi-transparent */
+    color: #d4a857; /* Texte en doré */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 10;
+
         }
         .question, .result {
             display: none;
@@ -43,18 +45,19 @@
             background-color: #e5c07b;
         }
         .logo {
-            width: 120px; /* Ajuste la taille */
-            height: auto;
-            margin-bottom: 20px;
-            border-radius: 50%; /* Rend l’image parfaitement circulaire */
-            opacity: 0.8; /* Effet de fondu */
-            transition: opacity 0.3s ease-in-out;
+           width: 120px; /* Ajuste la taille */
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 50%; /* Rend l’image parfaitement circulaire */
+    opacity: 0.8; /* Effet de fondu */
+    transition: opacity 0.3s ease-in-out;
+
         }
-        .logo:hover {
-            opacity: 1; /* Augmente l'opacité au survol */
-        }
+.logo:hover {
+    opacity: 1; /* Augmente l'opacité au survol */
+}
         .background {
-            background: url('https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/images/background.jpg') no-repeat center center/cover;
+            background: url('https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/refs/heads/main/background.jpg') no-repeat center center/cover;
             position: fixed;
             top: 0;
             left: 0;
@@ -67,8 +70,8 @@
 <body>
     <div class="background"></div>
     <div class="container">
-        <h3>T&Co par Samantha Khelil</h3>
-        <img src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/images/logo-tco.png" class="logo" alt="T&Co">
+<h3>T&Co par Samantha Khelil</h3>
+        <img src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/refs/heads/main/logo-tco.png" class="logo" alt="T&Co">
         <h2>Bienvenue dans L'Appel de l’Ose !</h2>
         <p>Un jeu pour révéler ce que vous devriez oser.</p>
         
@@ -90,7 +93,7 @@
             <h3>Votre révélation :</h3>
             <p id="reveal"></p>
             <p>Félicitations ! Vous avez gagné le droit de me contacter.</p>
-            <button onclick="window.open('https://docs.google.com/viewer?url=https://github.com/TandCO/l-appel-de-l-ose/raw/main/Samantha%20Khelil%20Coach.pdf&embedded=true', '_blank')">Voir le OnePager</button>
+            <button onclick="contactMe()">Parlons-en !</button>
         </div>
     </div>
 
@@ -150,7 +153,9 @@
             return words[answers[0]] + " - " + words[answers[1]] + " - " + words[answers[2]];
         }
 
-        
+        function contactMe() {
+            window.location.href = "mailto:t.co@outlook.fr";
+        }
     </script>
 </body>
 </html>
