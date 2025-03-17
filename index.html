@@ -141,7 +141,8 @@ const choices = {
 };
 
 // Affichage de la première question
-function chooseProfile() {
+function chooseProfile(selectedProfile) {
+    profile = selectedProfile; // Met à jour le profil choisi
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
     setQuestion(0);
