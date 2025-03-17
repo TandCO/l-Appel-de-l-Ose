@@ -137,19 +137,15 @@ function setQuestion(index) {
         let buttons = document.getElementById("choices");
         buttons.innerHTML = ""; // On vide les boutons précédents
 
-let buttons = document.getElementById("choices");
-buttons.innerHTML = ""; // On vide les anciens boutons
+        let labels = ["A", "B", "C"];
+        let choicesList = choices[profile][index];
 
-let labels = ["A", "B", "C"];
-let choicesList = choices[profile][index];
-
-labels.forEach((label) => {
-    let btn = document.createElement("button");
-    btn.innerText = `${label}. ${choicesList[label]}`; // Affiche le texte de réponse correct
-    btn.onclick = () => selectAnswer(label); // Stocke directement "A", "B" ou "C"
-    buttons.appendChild(btn);
-});
-        }
+        labels.forEach((label) => {
+            let btn = document.createElement("button");
+            btn.innerText = `${label}. ${choicesList[label]}`; // Affiche le texte de réponse correct
+            btn.onclick = () => selectAnswer(label); // Stocke directement "A", "B" ou "C"
+            buttons.appendChild(btn);
+        });
     } else {
         showResult();
     }
