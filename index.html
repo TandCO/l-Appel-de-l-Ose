@@ -117,11 +117,11 @@ const questions = {
 // Définition des réponses possibles
 const choices = {
     leader: [
-        ["J’organise des entretiens individuels avec chaque membre.", "Je réunis toute l’équipe et partage ma vision.", "J’observe d’abord avant d’agir."],
-        ["J’organise un échange ouvert.", "J’observe et analyse discrètement.", "Je laisse le temps faire son œuvre."],
-        ["Je l’encourage à partager publiquement son idée.", "Je l’aborde discrètement après la réunion.", "Je lui dis qu’on en reparlera plus tard."],
-        ["J’interromps la réunion et demande ce qui ne va pas.", "J’observe et repère les signaux faibles.", "Je poursuis la réunion sans changement."],
-        ["Je félicite immédiatement devant toute l’équipe.", "Je lui envoie un message personnel.", "Je reporte le feedback à plus tard."]
+        { A: "J’organise des entretiens individuels avec chaque membre.", B: "Je réunis toute l’équipe et partage ma vision.", C: "J’observe d’abord avant d’agir." },
+        { A: "J’organise un échange ouvert.", B: "J’observe et analyse discrètement.", C: "Je laisse le temps faire son œuvre." },
+        { A: "Je l’encourage à partager publiquement son idée.", B: "Je l’aborde discrètement après la réunion.", C: "Je lui dis qu’on en reparlera plus tard." },
+        { A: "J’interromps la réunion et demande ce qui ne va pas.", B: "J’observe et repère les signaux faibles.", C: "Je poursuis la réunion sans changement." },
+        { A: "Je félicite immédiatement devant toute l’équipe.", B: "Je lui envoie un message personnel.", C: "Je reporte le feedback à plus tard." }
     ]
 };
 
@@ -142,7 +142,8 @@ function setQuestion(index) {
 
         for (let i = 0; i < choices[profile][index].length; i++) {
             let btn = document.createElement("button");
-            btn.innerText = choices[profile][index][i]; // Maintenant, ça affiche bien le texte de la réponse
+            let labels = ["A", "B", "C"];
+btn.innerText = `${labels[i]}. ${choices[profile][index][labels[i]]}`; // Maintenant, ça affiche bien le texte de la réponse
             btn.onclick = () => selectAnswer(["A", "B", "C"][i]);
             buttons.appendChild(btn);
         }
@@ -191,3 +192,4 @@ function showResult() {
     </script>
 </body>
 </html>
+
