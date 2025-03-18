@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Appel de l’Ose</title>
+    <title>L'Appel à l’Ose</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -108,7 +108,7 @@
     <div class="container">
 <h3>T&Co par Samantha Khelil</h3>
         <img src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/refs/heads/main/logo-tco.png" class="logo" alt="T&Co">
-        <h2>Bienvenue dans L'Appel de l’Ose !</h2>
+        <h2>Bienvenue dans L'Appel à l’Ose !</h2>
         <p>Un parcours interactif pour révéler ce que vous pourriez oser.</p>
         
         <div id="step1">
@@ -142,20 +142,20 @@ let answers = [];
 // Définition des scénarios et de leur nouvel ordre
 const questions = {
     leader: [
-        "Vous venez d’être nommé(e) responsable d’équipe. Quelle première action mettez-vous en place ?",
-        "Vous sentez que la confiance au sein de votre équipe pourrait être renforcée. Que faites-vous ?",
-        "L’un de vos collaborateurs a une idée révolutionnaire mais hésite à la partager. Comment réagissez-vous ?",
-        "Vous êtes en réunion et percevez des tensions sous-jacentes. Comment abordez-vous la situation ?",
-        "Un membre de votre équipe a réalisé un excellent travail. Comment choisissez-vous de le reconnaître ?",
-        "Avez-vous déjà envisagé que le coaching par le jeu et l’expérience pouvaient révolutionner la coopération dans votre équipe ?"
+        "Vous prenez la tête d’une équipe dont la culture et le niveau de maturité vous sont encore inconnus. Pour éviter de sombrer dans l’excès de contrôle ou l’improvisation totale, quelle est votre première approche ?",
+        "Vous sentez que des non-dits bloquent la coopération et la confiance. Plutôt que d'attendre un miracle, quelle posture adoptez-vous pour transformer ces tensions en opportunité collective ?",
+        "Votre équipe semble s’autocensurer et n’ose pas sortir des sentiers battus. Et si expérimenter devenait un réflexe, plutôt qu’une prise de risque ?",
+        "Lors d’une réunion, vous sentez que tout le monde n’est pas aligné entre ce qui se dit et ce qui se pense… Comment révéler ces écarts sans passer pour un perturbateur ?",
+        "Comment créer une culture où chaque avancée est reconnue, et pas seulement les résultats finaux ?",
+        "Et si expérimenter autrement permettait à votre équipe de mieux collaborer, de s'aligner naturellement et d’œuvrer avec plus de sens ? Que vous inspire cette idée ?"
     ],
     explorateur: [
-        "Vous sentez qu’un changement est nécessaire dans votre vie professionnelle. Quelle première action entreprenez-vous ?",
-        "Vous hésitez à quitter votre poste actuel, par peur de l’inconnu. Que faites-vous ?",
-        "Votre entourage exprime des doutes sur votre volonté de changement. Comment réagissez-vous ?",
+        "Vous sentez qu’un changement est nécessaire dans votre vie professionnelle, mais par où commencer ?",
+        "Vous hésitez à quitter votre poste actuel, par peur de l’inconnu. Comment abordez-vous cette incertitude ?",
+        "Vous avez une idée en tête depuis longtemps mais n’osez pas passer à l’action. Que faites-vous ?",
         "On vous propose une opportunité excitante, mais totalement nouvelle pour vous. Quelle est votre réaction ?",
-        "Après réflexion, vous êtes prêt(e) à passer à l’action. Quelle est votre prochaine étape ?",
-        "Et si le jeu pouvait être un levier puissant pour évoluer et oser pleinement votre transformation ?"
+        "Vous avez enfin décidé d’avancer, mais vous sentez que la motivation risque de s’essouffler. Quelle est votre stratégie ?",
+        "Et si le jeu et l’expérimentation vous aidaient à trouver une voie professionnelle plus épanouissante, durable et alignée avec vous-même ? Que vous inspire cette idée ?"
     ],
 
     compagnon: [
@@ -180,19 +180,36 @@ const questions = {
 // Définition des réponses possibles
 const choices = {
     leader: [
-        { A: "J’organise des entretiens individuels avec chaque membre.", B: "Je réunis toute l’équipe et partage ma vision.", C: "J’observe d’abord avant d’agir." },
-        { A: "J’organise un échange ouvert.", B: "J’observe et analyse discrètement.", C: "Je laisse le temps faire son œuvre." },
-        { A: "Je l’encourage à partager publiquement son idée.", B: "Je l’aborde discrètement après la réunion.", C: "Je lui dis qu’on en reparlera plus tard." },
-        { A: "J’interromps la réunion et demande ce qui ne va pas.", B: "J’observe et repère les signaux faibles.", C: "Je poursuis la réunion sans changement." },
-        { A: "Je félicite immédiatement devant toute l’équipe.", B: "Je lui envoie un message personnel.", C: "Je reporte le feedback à plus tard." },
-        { A: "Oui, et je suis curieux(se) d’explorer cette approche.", B: "Pourquoi pas ? J’aimerais en savoir plus.", C: "Non, je n’avais jamais pensé à cela." }
+        { A: "Je prends un café avec chaque membre de l’équipe pour comprendre ce qui les motive (et ce qui les épuise !). Bonus : j’écoute leurs anecdotes les plus drôles sur le boulot.", 
+          B: "J’observe les interactions comme un scientifique sur le terrain : silences gênants, regards en biais… tout m’intéresse !", 
+          C: "Je me concentre sur les chiffres et objectifs, après tout, c’est la performance qui parle, non ?" },
+
+        { A: "J’organise une réunion où tout le monde peut râler une bonne fois pour toutes… puis on transforme ça en solutions !", 
+          B: "Je teste un jeu collaboratif qui oblige l’équipe à communiquer autrement. Parfois, dire ce qu’on pense est plus facile en jouant !", 
+          C: "J’attends que le temps fasse son œuvre, après tout, on finit toujours par oublier les tensions, non ?" },
+
+        { A: "J’instaure des moments où 'toute idée est bonne à partager', même (surtout ?) les plus folles.", 
+          B: "Je mets en place un cadre clair qui encourage les initiatives tout en sécurisant la prise de risque.", 
+          C: "Je valorise les idées qui fonctionnent bien plutôt que de pousser à l’innovation." },
+
+        { A: "J’appuie sur pause : 'Bon, qui pense quoi, vraiment ?' et j’invite l’équipe à partager.", 
+          B: "J’utilise un outil ludique : un tour de table où chacun partage en une phrase imagée comment il se sent.", 
+          C: "Je reste en retrait et laisse la discussion évoluer sans intervention directe." },
+
+        { A: "J’instaure un rituel '1 apprentissage, 1 victoire' chaque semaine.", 
+          B: "Je valorise les efforts invisibles, car même ce qu’on ne voit pas fait la différence.", 
+          C: "Je félicite quand on atteint un objectif précis. Après tout, c’est ça qui compte le plus, non ?" },
+
+        { A: "Cette approche m’intrigue et j’aimerais découvrir comment elle pourrait transformer notre façon de travailler ensemble.", 
+          B: "Pourquoi pas ? Je suis curieux(se) de voir quels résultats concrets cela pourrait apporter à notre équipe.", 
+          C: "Je suis sceptique, mais ouvert(e) à en apprendre davantage sur cette façon d’expérimenter." }
     ],
     explorateur: [
-        { A: "Je liste tout ce qui me motive et ce qui me freine.", B: "Je discute avec quelqu’un qui a déjà vécu un changement similaire.", C: "J’attends de voir si une opportunité se présente d’elle-même." },
-        { A: "J’explore les pires scénarios et j’élabore un plan B.", B: "Je cherche à comprendre si cette peur est fondée ou non.", C: "Je laisse couler et j’attends d’être sûr(e)." },
-        { A: "Je leur explique clairement mes motivations et reste ferme sur mon choix.", B: "J’écoute leurs arguments pour voir s’ils ont des points valides.", C: "Je commence à douter et je remets tout en question." },
-        { A: "J’accepte immédiatement, quitte à apprendre en chemin.", B: "Je prends le temps d’évaluer les risques et avantages.", C: "Je décline car cela me semble trop incertain." },
-        { A: "J’établis un plan concret avec des objectifs clairs.", B: "J’annonce mon projet à mon entourage pour me sentir engagé(e).", C: "Je me laisse encore un peu de temps avant d’agir." },
+        { A: "Je lance une pièce en l’air et laisse le destin décider. Blague à part, je commence par clarifier ce que je veux vraiment.", B: "J’observe ce qui, dans ma routine actuelle, me procure de la joie et ce qui m’épuise", C: "J’attends un signe cosmique… ou une poussée d’adrénaline pour me lancer." },
+        { A: "Je fais un test grandeur nature : une semaine où je vis comme si j’avais déjà franchi le cap.", B: "Je cherche des exemples inspirants de personnes qui ont osé changer et analysé comment elles ont fait.", C: "Je rationalise en listant toutes les choses qui pourraient mal tourner (puis je referme cette liste en paniquant un peu)." },
+        { A: "Je me donne un défi en 48h pour faire une mini-action qui matérialise cette idée, juste pour voir.", B: "J’en parle autour de moi et je cherche du feedback… tant que ce n’est pas juste pour procrastiner.", C: " Je la garde bien au chaud en me disant que mon futur moi s’en occupera (spoiler : mon futur moi ne l’a toujours pas fait)." },
+        { A: "J’accepte direct, car après tout, les plus belles aventures commencent souvent par un “Pourquoi pas ?", B: "Je pèse le pour et le contre, puis je saute dans l’inconnu avec une bouée (au cas où).", C: "Je décline poliment en me promettant d’être plus audacieux(se)... une prochaine fois." },
+        { A: "Je rends mon objectif ludique en y intégrant des défis et des récompenses.", B: "Je trouve un “partenaire de changement” pour garder le cap et ne pas me sentir seul(e).", C: "J’attends d’être plus motivé(e)… en regardant une nouvelle vidéo de développement personnel (encore une)." },
         { A: "Oui, et cela me donne envie de tester cette approche.", B: "Je n’y avais pas pensé, mais je suis intrigué(e).", C: "Non, mais peut-être est-il temps d’essayer." }
     ],
 
@@ -318,23 +335,23 @@ function showResult() {
 
     if (profile === "leader") {
         if (countA > countB && countA > countC) {
-            finalMessage = "Osez prendre les décisions qui comptent et transformer l’énergie en action.";
+            finalMessage = "Osez être un catalyseur d’évolution. En ouvrant de nouveaux espaces d’expérimentation, vous facilitez une dynamique où chacun trouve sa juste place.";
         } else if (countB > countA && countB > countC) {
-            finalMessage = "Osez aller au-delà de l’analyse et faire confiance à votre intuition.";
+            finalMessage = "Osez tester, ajuster et apprendre ! L’expérimentation collective est une force qui transforme durablement les équipes et leur manière de travailler ensemble.";
         } else if (countC > countA && countC > countB) {
-            finalMessage = "Osez sortir de l’attente et provoquer le changement.";
+            finalMessage = "Osez remettre en question vos automatismes. Parfois, l’évolution vient non pas du changement radical, mais d’un regard neuf sur ce qui est déjà là.";
         } else {
-            finalMessage = "Osez explorer de nouvelles approches pour affirmer votre leadership.";
+            finalMessage = "Osez un leadership du vivant, où chaque pas compte. Vous avez déjà commencé à insuffler un mouvement… Quelle est la prochaine étape ?";
         }
     } else if (profile === "explorateur") {
         if (countA > countB && countA > countC) {
-            finalMessage = "Vous avez une approche audacieuse du changement. Osez transformer cette énergie en actions concrètes et alignées avec vos aspirations.";
+            finalMessage = "Bravo ! Vous incarnez l’esprit de l’explorateur intrépide. Vous avez cette capacité rare à vous lancer sans attendre d’avoir tout prévu. Votre défi ? Canaliser cette énergie en mettant de la structure dans vos élans pour aller encore plus loin, avec impact et sens. Continuez à oser, mais apprenez aussi à cultiver la patience et la persévérance sur la durée !";
         } else if (countB > countA && countB > countC) {
-            finalMessage = "Votre capacité à analyser est un atout. Osez maintenant franchir la ligne entre réflexion et passage à l’action.";
+            finalMessage = "Vous êtes un stratège du changement. Vous aimez comprendre avant de plonger, ce qui vous donne une belle capacité d’adaptation. Votre défi ? Parfois, la réflexion peut se transformer en frein. Rappelez-vous que l’action est souvent la meilleure des clarifications. Testez, ajustez, avancez : votre chemin se dessinera en marchant.";
         } else if (countC > countA && countC > countB) {
-            finalMessage = "Le changement ne se produit pas en restant spectateur. Osez poser la première pierre de votre transformation dès aujourd’hui.";
+            finalMessage = "Le désir de changement est en vous, mais vous hésitez encore à faire le premier pas. Et si vous essayiez une toute petite action, juste pour voir ? Le changement n’est pas une montagne à gravir, c’est une série de petits pas. Faites-en un aujourd’hui. Osez sortir du mode “attente” pour devenir acteur(trice) de votre propre transformation.";
         } else {
-            finalMessage = "Vous explorez le changement sous plusieurs angles. Osez maintenant identifier ce qui vous inspire vraiment et vous engager pleinement.";
+            finalMessage = "Vous jonglez habilement entre l’intuition, la réflexion et la prudence. Vous savez expérimenter, analyser et prendre du recul quand il le faut. Cette flexibilité est un atout puissant… à condition qu’elle ne vous empêche pas d’avancer ! Votre prochaine mission ? Identifier ce qui vous fait vraiment vibrer et oser un engagement clair. Le changement est un chemin, et vous avez déjà toutes les clés en main pour le parcourir à votre rythme.";
         }
     } else if (profile === "compagnon") {
         if (countA > countB && countA > countC) {
