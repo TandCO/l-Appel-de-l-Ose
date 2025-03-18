@@ -279,9 +279,27 @@ function setQuestion(index) {
     }
 }
 
+// Fonction qui envoi données Google Sheet
+function sendToGoogleForms(profile, question, answer) {
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScTL5PBsQ6n1aFXoXZUBV7yAaIcw1d7AxzgCFEZyHhmWyZGdg/formResponse"; // 🔥 Mets ici l'URL de ton formulaire Google Forms
+    const formData = new FormData();
+    
+    formData.append("entry.477990358", profile); // Remplace par l'ID du champ Catégorie
+    formData.append("entry.2032049154", question); // Remplace par l'ID du champ Question affichée
+    formData.append("entry.833075998", answer); // Remplace par l'ID du champ Réponse sélectionnée
+
+    fetch(formURL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+    }).then(() => console.log("Réponse envoyée à Google Forms ✅"));
+}
+
 // Fonction qui enregistre la réponse et passe à la question suivante
 function selectAnswer(choice) {
     answers.push(choice);
+    // 📌 Envoie les données à Google Forms
+    sendToGoogleForms(profile, questions[profile][answers.length - 1], choices[profile][answers.length - 1][choice]); 
     setQuestion(answers.length);
 }
 
