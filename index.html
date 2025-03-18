@@ -274,7 +274,7 @@ function chooseProfile(selectedProfile) {
     }
 }
 
-// Fonction qui affiche les questions et les choix
+// Fonction pour afficher les questions et les choix avec ordre aléatoire des réponses
 function setQuestion(index) {
     if (index < questions[profile].length) {
         document.getElementById("question").innerText = questions[profile][index];
@@ -282,13 +282,16 @@ function setQuestion(index) {
         let buttons = document.getElementById("choices");
         buttons.innerHTML = ""; // On vide les boutons précédents
 
-        let labels = ["A", "B", "C"];
-        let choicesList = choices[profile][index];
+        let choicesList = Object.entries(choices[profile][index]); // Convertit les réponses en tableau de paires [clé, valeur]
 
-        labels.forEach((label) => {
+        // Mélange aléatoirement les réponses
+        choicesList = choicesList.sort(() => Math.random() - 0.5);
+
+        // Génère les boutons dans un ordre aléatoire
+        choicesList.forEach(([key, text]) => {
             let btn = document.createElement("button");
-            btn.innerText = `${label}. ${choicesList[label]}`; // Affiche le texte de réponse correct
-            btn.onclick = () => selectAnswer(label, questions[profile][index], choicesList[label]); // Stocke directement "A", "B" ou "C"
+            btn.innerText = text; // Affiche uniquement le texte de réponse
+            btn.onclick = () => selectAnswer(key, questions[profile][index], text); // Stocke directement la clé A, B ou C
             buttons.appendChild(btn);
         });
     } else {
