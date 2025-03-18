@@ -116,6 +116,7 @@
             <button onclick="chooseProfile('leader')">Un responsable d’équipe</button>
             <button onclick="chooseProfile('explorateur')">Un individu en quête de changement</button>
             <button onclick="chooseProfile('compagnon')">Un membre d’un groupe d’amis</button>
+            <button onclick="chooseProfile('apprenant')">Vous souhaitez rejoindre un réseau apprenant</button>
         </div>
         
         <div id="step2" class="question">
@@ -164,6 +165,15 @@ const questions = {
         "Vous avez une idée originale à proposer au groupe, mais vous hésitez. Que faites-vous ?",
         "Vous souhaitez renforcer les liens et l’énergie du groupe sur le long terme. Quelle approche adoptez-vous ?",
         "En quoi l’accompagnement d’un coach utilisant le jeu pourrait-il renforcer vos liens, vous assurer un réseau solide et durable, et vous aider à concrétiser ensemble les projets qui vous tiennent à cœur ?"
+    ],
+
+    apprenant: [
+        "Vous arrivez dans un nouveau cercle d’apprentis-explorateurs. Quelle est votre première réaction ?",
+        "Vous êtes face à une expérience immersive où l'on apprend par le jeu et l’expérimentation. Que faites-vous ?",
+        "Un membre du réseau propose une expérience qui remet en question votre point de vue. Que faites-vous ?",
+        "On vous propose de participer à une mission collective où chacun contribue à un projet concret. Comment réagissez-vous ?",
+        "Après quelques échanges, vous ressentez que ce réseau pourrait être enrichissant. Quelle serait votre première action pour vous impliquer pleinement ?",
+        "Avez-vous déjà envisagé que l’accompagnement par le jeu et l’expérimentation pourrait être un levier puissant pour atteindre vos objectifs et contribuer au bien commun ?"
     ]
 };
 
@@ -193,6 +203,32 @@ const choices = {
         { A: "Je lance mon idée sans attendre et j’observe les réactions.", B: "Je teste mon idée avec une ou deux personnes avant de la proposer au groupe.", C: "Je préfère attendre un moment plus opportun." },
         { A: "J’intègre des moments de jeu et de surprise pour créer du lien.", B: "Je propose des discussions régulières sur ce qui est important pour chacun.", C: "Je laisse le groupe évoluer naturellement et je m’adapte." },
         { A: "Oui, j’aimerais découvrir comment cela pourrait impacter notre dynamique.", B: "Je n’y avais pas pensé, mais c’est une piste qui mérite réflexion.", C: "Cela me semble peu probable qu’un coach puisse accompagner un groupe d’amis ou un membre d’une équipe." }
+    ],
+
+    apprenant: [
+        { A: "Je propose immédiatement une idée pour que nous construisions quelque chose ensemble.", 
+          B: "J’observe les dynamiques du groupe avant de trouver ma place.", 
+          C: "J’écoute les expériences des autres pour comprendre comment ce réseau pourrait m’apporter des bénéfices." },
+
+        { A: "Je plonge dans l’expérience et participe activement.", 
+          B: "Je prends un moment pour comprendre avant de m’engager pleinement.", 
+          C: "Je reste en retrait pour observer les autres avant de décider." },
+
+        { A: "Je challenge son point de vue et propose une discussion ouverte.", 
+          B: "J’écoute attentivement et j’essaie de voir ce que je peux en retirer.", 
+          C: "Je me questionne intérieurement sur mes croyances avant de répondre." },
+
+        { A: "J’accepte immédiatement, curieux(se) de l’expérience.", 
+          B: "Je prends un moment pour réfléchir à mon implication.", 
+          C: "Je préfère observer avant de me lancer." },
+
+        { A: "Je propose une idée pour un projet collectif motivant.", 
+          B: "Je participe activement aux discussions et ateliers.", 
+          C: "Je commence par mieux comprendre les membres du réseau avant d’agir." },
+
+        { A: "Oui, et je suis enthousiaste à l’idée d’explorer cette approche pour me développer tout en ayant un impact.", 
+          B: "Pourquoi pas ? Cela m’intrigue et j’aimerais comprendre comment cela fonctionne.", 
+          C: "Je suis sceptique, mais je suis curieux(se) de voir ce que cela pourrait apporter." }
     ]
 };
 
@@ -294,7 +330,17 @@ function showResult() {
         } else {
             finalMessage = "Vous jouez un rôle équilibré dans votre groupe. Osez maintenant identifier ce qui vous fait vibrer le plus et cultivez-le pour renforcer encore plus vos relations.";
         }
+} else if (profile === "apprenant") { // ✅ Ce bloc est bien séparé et non imbriqué dans "compagnon"
+    if (countA > countB && countA > countC) {
+        finalMessage = "Osez plonger dans une dynamique de co-création et d’expérimentation ! Votre énergie et votre engagement peuvent transformer une simple idée en une véritable aventure collective.";
+    } else if (countB > countA && countB > countC) {
+        finalMessage = "Osez avancer à votre rythme, en explorant les opportunités et en trouvant votre propre voie. Chaque pas compte, et chaque découverte vous rapproche de votre réalisation.";
+    } else if (countC > countA && countC > countB) {
+        finalMessage = "Osez vous ouvrir à de nouvelles manières d’évoluer et d’apprendre. L’exploration commence par la curiosité, et vous êtes déjà en chemin vers de belles découvertes.";
+    } else {
+        finalMessage = "Osez rejoindre une aventure où apprentissage rime avec expérimentation, entraide et plaisir. Un monde de possibilités s’ouvre à vous !";
     }
+}
 
     let revealElement = document.getElementById("reveal");
     revealElement.innerText = finalMessage;
