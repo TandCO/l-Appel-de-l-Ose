@@ -101,6 +101,16 @@
         background-position: center;
     }
 }
+        @keyframes glow {
+    0% { text-shadow: 0px 0px 5px rgba(255,255,255,0.1); }
+    50% { text-shadow: 0px 0px 15px rgba(255,215,0,0.8); }
+    100% { text-shadow: 0px 0px 5px rgba(255,255,255,0.1); }
+}
+.glowing-text {
+    animation: glow 2s infinite alternate;
+    font-weight: bold;
+    color: #FFD700; /* Or couleur dorée pour l’effet rayonnant */
+}
     </style>
 </head>
 <body>
@@ -378,9 +388,16 @@ function showResult() {
     }
 }
 
-    let revealElement = document.getElementById("reveal");
-    revealElement.innerText = finalMessage;
-    revealElement.style.opacity = "0";
+let revealElement = document.getElementById("reveal");
+revealElement.innerText = finalMessage;
+revealElement.classList.add("glowing-text"); // Ajoute l'effet lumineux
+
+// 🌟 Effet d'apparition progressive
+revealElement.style.opacity = "0";
+setTimeout(() => {
+    revealElement.style.transition = "opacity 2s ease-in-out";
+    revealElement.style.opacity = "1";
+}, 500);
 
     setTimeout(() => {
         revealElement.style.transition = "opacity 2s";
