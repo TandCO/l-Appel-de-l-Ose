@@ -257,7 +257,7 @@ function chooseProfile(selectedProfile) {
     }
 }
 
-// Fonction pour afficher les questions et les choix
+// Fonction qui affiche les questions et les choix
 function setQuestion(index) {
     if (index < questions[profile].length) {
         document.getElementById("question").innerText = questions[profile][index];
@@ -271,7 +271,7 @@ function setQuestion(index) {
         labels.forEach((label) => {
             let btn = document.createElement("button");
             btn.innerText = `${label}. ${choicesList[label]}`; // Affiche le texte de réponse correct
-            btn.onclick = () => selectAnswer(label); // Stocke directement "A", "B" ou "C"
+            btn.onclick = () => selectAnswer(label, questions[profile][index], choicesList[label]); // Stocke directement "A", "B" ou "C"
             buttons.appendChild(btn);
         });
     } else {
@@ -279,27 +279,25 @@ function setQuestion(index) {
     }
 }
 
-// Fonction qui envoi données Google Sheet
+// Fonction qui envoie les données à Google Forms via Google Sheets
 function sendToGoogleForms(profile, question, answer) {
-    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScTL5PBsQ6n1aFXoXZUBV7yAaIcw1d7AxzgCFEZyHhmWyZGdg/formResponse"; // 🔥 Mets ici l'URL de ton formulaire Google Forms
-    const formData = new FormData();
-    
-    formData.append("entry.477990358", profile); // Remplace par l'ID du champ Catégorie
-    formData.append("entry.2032049154", question); // Remplace par l'ID du champ Question affichée
-    formData.append("entry.833075998", answer); // Remplace par l'ID du champ Réponse sélectionnée
+    const formURL = `https://docs.google.com/forms/d/e/1FAIpQLScTL5PBsQ6n1aFXoXZUBV7yAaIcw1d7AxzgCFEZyHhmWyZGdg/formResponse?
+entry.477990358=${encodeURIComponent(profile)}
+&entry.2032049154=${encodeURIComponent(question)}
+&entry.833075998=${encodeURIComponent(answer)}`;
 
-    fetch(formURL, {
-        method: "POST",
-        body: formData,
+    fetch(formURL, { 
+        method: "GET", 
         mode: "no-cors"
-    }).then(() => console.log("Réponse envoyée à Google Forms ✅"));
+    }).then(() => console.log("✅ Réponse envoyée à Google Forms !"))
+    .catch(error => console.error("❌ Erreur d'envoi :", error));
 }
 
 // Fonction qui enregistre la réponse et passe à la question suivante
-function selectAnswer(choice) {
+function selectAnswer(choice, question, answerText) {
     answers.push(choice);
-    // 📌 Envoie les données à Google Forms
-    sendToGoogleForms(profile, questions[profile][answers.length - 1], choices[profile][answers.length - 1][choice]); 
+    // 📌 Envoie les données à Google Forms avec GET
+    sendToGoogleForms(profile, question, answerText);
     setQuestion(answers.length);
 }
 
