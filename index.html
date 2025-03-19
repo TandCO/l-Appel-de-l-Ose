@@ -114,15 +114,12 @@
     </style>
 </head>
 <body>
-    <audio id="accueil_audio" src="https://drive.google.com/uc?export=download&id=17ghL7JmvnPwFnCWWjjPlo4t0a9Eo4zJ4"></audio>
     <div class="background"></div>
     <div class="container">
 <h3>T&Co par Samantha Khelil</h3>
         <img src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/refs/heads/main/logo-tco.png" class="logo" alt="T&Co">
         <h2>Bienvenue dans Ascension: L'Appel </h2>
         <p>Un parcours interactif pour révéler ce que vous pourriez oser.</p>
-        <!-- 🎵 Bouton pour activer le son -->
-<button id="toggleAudio">🔊 Expérience immersive : SOUNDS ON</button>
         
         <div id="step1">
             <h3>Qui êtes-vous ?</h3>
@@ -407,22 +404,6 @@ setTimeout(() => {
         revealElement.style.opacity = "1";
     }, 500);
 }
-document.addEventListener("DOMContentLoaded", function () {
-    let audio = document.getElementById("accueil_audio");
-    let toggleButton = document.getElementById("toggleAudio");
-
-    toggleButton.addEventListener("click", function () {
-        if (audio.paused) {
-            toggleButton.disabled = true; // Désactive immédiatement le bouton pour éviter plusieurs clics
-            audio.play().then(() => {
-                toggleButton.textContent = "🎵 Musique en cours...";
-            }).catch(error => {
-                console.log("🔇 Lecture bloquée par le navigateur :", error);
-                toggleButton.disabled = false; // Réactive le bouton si l'audio ne démarre pas
-            });
-        }
-    });
-});
 
     </script>
 </body>
