@@ -114,6 +114,7 @@
     </style>
 </head>
 <body>
+    <audio id="accueil_audio" src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/accueil_theme.mp3"></audio>
     <div class="background"></div>
     <div class="container">
 <h3>T&Co par Samantha Khelil</h3>
@@ -182,7 +183,7 @@ const questions = {
         "Vous êtes face à une expérience immersive où l'on apprend par le jeu et l’expérimentation. Que faites-vous ?",
         "Un membre du réseau propose une idée qui chamboule votre façon de penser. Comment réagissez-vous ?",
         "Vous êtes au coeur d'un jeu qui vous invite à accomplir des défis personnels et collectifs pendant un an. Quel type d'objectif espérez-vous tirer au sort ?",
-        "Participer à ce jeu, c'est s'offrir une avenutre qui bouscule les habitudes et ouvre de nouvelles perspectives. A quel point vous sentez-vous prêt(e) à vivre une expérience aussi transformatrice ?",
+        "Participer à ce jeu, c'est s'offrir une aventure qui bouscule les habitudes et ouvre de nouvelles perspectives. A quel point vous sentez-vous prêt(e) à vivre une expérience aussi transformatrice ?",
         "Avez-vous déjà envisagé que l’accompagnement par le jeu et l’expérimentation pourrait être un levier puissant pour atteindre vos objectifs et contribuer au bien commun ?"
     ]
 };
@@ -195,7 +196,7 @@ const choices = {
           C: "Je me concentre sur les chiffres et objectifs, après tout, c’est la performance qui parle, non ?" },
 
         { A: "J’organise une réunion où tout le monde peut râler une bonne fois pour toutes… puis on transforme ça en solutions !", 
-          B: "Je teste un jeu collaboratif qui oblige l’équipe à communiquer autrement. Parfois, dire ce qu’on pense est plus facile en jouant !", 
+          B: "Je teste un jeu collaboratif qui encourage l’équipe à communiquer autrement. Parfois, dire ce qu’on pense est plus facile en jouant !", 
           C: "J’attends que le temps fasse son œuvre, après tout, on finit toujours par oublier les tensions, n'est-ce-pas ?" },
 
         { A: "Oui et d'ailleurs, j’instaure des moments où 'toute idée est bonne à partager', même (surtout ?) les plus folles.", 
@@ -392,19 +393,39 @@ let revealElement = document.getElementById("reveal");
 revealElement.innerText = finalMessage;
 revealElement.classList.add("glowing-text"); // Ajoute l'effet lumineux
 
-// 🌟 Effet d'apparition progressive
+// 🌟 Effet d'apparition progressive de la révélation
 revealElement.style.opacity = "0";
 setTimeout(() => {
     revealElement.style.transition = "opacity 2s ease-in-out";
     revealElement.style.opacity = "1";
 }, 500);
 
-    setTimeout(() => {
-        revealElement.style.transition = "opacity 2s";
-        revealElement.style.opacity = "1";
-    }, 500);
-}
+// 🎶 Lecture automatique du son d'accueil (joué une seule fois)
+document.addEventListener('DOMContentLoaded', function () {
+    let audio = document.getElementById("accueil_audio");
+    if (audio) {
+        audio.play().catch(error => {
+            console.log("🔇 Lecture auto bloquée par le navigateur. Un clic utilisateur est nécessaire.");
+        });
+    }
+});
 
+// 🎯 Stoppe la musique d'accueil dès qu'un profil est sélectionné
+function chooseProfile(selectedProfile) {
+    profile = selectedProfile;
+    
+    // 🛑 Stoppe le son d'accueil
+    let audio = document.getElementById("accueil_audio");
+    if (audio) {
+        audio.pause();
+        audio.currentTime = 0; // Remet à zéro au cas où
+    }
+
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
+    document.getElementById("backButton").style.display = "block";
+    setQuestion(0);
+}
     </script>
 </body>
 </html>
