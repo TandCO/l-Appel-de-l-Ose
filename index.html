@@ -15,17 +15,19 @@
             overflow: hidden;
         }
 
-       .container {
+        .container {
+           
     max-width: 600px;
     margin: auto;
-    background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    background: rgba(0, 0, 0, 0.7); /* Ajout de fond semi-transparent */
     color: #d4a857; /* Texte en doré */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
     position: relative;
     z-index: 10;
-}
+
+        }
         .question, .result {
             display: none;
         }
@@ -64,36 +66,6 @@
             height: 100%;
             z-index: -1;
             transition: background 1.5s ease-in-out; /* Transition fluide de 1.5s */
-        }
-
-                /* ✅ Styles pour le bouton audio */
-        .audio-control {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .audio-control button {
-            background-color: transparent;
-            border: 2px solid #d4a857;
-            color: #d4a857;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        .audio-control button:hover {
-            background-color: #d4a857;
-            color: #3d4b3a;
-        }
-
-        .audio-control span {
-            margin-left: 10px;
-            font-weight: bold;
-            color: #d4a857;
         }
          /* 🌟 Styles pour MOBILE */
 @media screen and (max-width: 768px) {
@@ -142,16 +114,6 @@
     </style>
 </head>
 <body>
-    <!-- 🎵 Bouton de contrôle audio -->
-    <div class="audio-control">
-        <button id="toggleAudio">🔊</button>
-        <span>Pour une expérience immersive : Sound On</span>
-    </div>
-
-    <!-- 🎵 Audio -->
-    <audio id="accueil_audio" src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/accueil_theme.mp3" loop></audio>
-
-   
     <div class="background"></div>
     <div class="container">
 <h3>T&Co par Samantha Khelil</h3>
@@ -430,90 +392,19 @@ let revealElement = document.getElementById("reveal");
 revealElement.innerText = finalMessage;
 revealElement.classList.add("glowing-text"); // Ajoute l'effet lumineux
 
-        // 🎵 Gestion de l'audio avec bouton de contrôle
-        document.addEventListener("DOMContentLoaded", function () {
-            let audio = document.getElementById("accueil_audio");
-            let toggleAudioButton = document.getElementById("toggleAudio");
+// 🌟 Effet d'apparition progressive
+revealElement.style.opacity = "0";
+setTimeout(() => {
+    revealElement.style.transition = "opacity 2s ease-in-out";
+    revealElement.style.opacity = "1";
+}, 500);
 
-            toggleAudioButton.addEventListener("click", function () {
-                if (audio.paused) {
-                    audio.play();
-                    toggleAudioButton.textContent = "🔇";
-                } else {
-                    audio.pause();
-                    toggleAudioButton.textContent = "🔊";
-                }
-            });
-        });
-
-            // ✅ Fonction pour choisir un profil et masquer la première section
-            window.chooseProfile = function(selectedProfile) {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "block";
-                document.getElementById("backButton").style.display = "block";
-
-            // 🔇 Couper la musique au choix du profil
-                if (!audio.paused) {
-                    audio.pause();
-                    toggleAudioButton.textContent = "🔊";
-                }
-            };
-
-    // 🔥 Affiche la section des questions
-    document.getElementById("step1").style.display = "none";
-    document.getElementById("step2").style.display = "block";
-    document.getElementById("backButton").style.display = "block";
-    
-    setTimeout(() => setQuestion(0), 300); // Petite pause pour éviter un blocage visuel
-}
-
-        // 🔙 Fonction pour revenir en arrière
-        function goBack() {
-            document.getElementById("step2").style.display = "none";
-            document.getElementById("step1").style.display = "block";
-            document.getElementById("backButton").style.display = "none";
-
-        // 🎵 Relancer l'audio si l'utilisateur revient en arrière
-                if (audio.paused) {
-                    audio.play();
-                    toggleAudioButton.textContent = "🔇";
-}
-
-        // 🎯 Affichage de la phrase révélatrice
-        function showResult() {
-            document.getElementById("step2").style.display = "none";
-            document.getElementById("result").style.display = "block";
-            document.getElementById("backButton").style.display = "none";
-
-            // 🌟 Effet lumineux et apparition progressive
-    let revealElement = document.getElementById("reveal");
-    revealElement.classList.add("glowing-text");
-    revealElement.style.opacity = "0";
-            
     setTimeout(() => {
-        revealElement.style.transition = "opacity 2s ease-in-out";
+        revealElement.style.transition = "opacity 2s";
         revealElement.style.opacity = "1";
     }, 500);
-
-    function isStorageAvailable(type) {
-    try {
-        let storage = window[type];
-        let testKey = '__test__';
-        storage.setItem(testKey, "test");
-        storage.removeItem(testKey);
-        return true;
-    } catch (e) {
-        return false;
-    }
 }
 
-// Utilisation sécurisée :
-if (isStorageAvailable("localStorage")) {
-    localStorage.setItem("profilChoisi", profile);
-} else {
-    console.warn("🚨 LocalStorage bloqué, certaines fonctionnalités peuvent ne pas marcher.");
-}
-}
     </script>
 </body>
 </html>
