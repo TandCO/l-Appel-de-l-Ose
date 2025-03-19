@@ -65,6 +65,36 @@
             z-index: -1;
             transition: background 1.5s ease-in-out; /* Transition fluide de 1.5s */
         }
+
+                /* ✅ Styles pour le bouton audio */
+        .audio-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .audio-control button {
+            background-color: transparent;
+            border: 2px solid #d4a857;
+            color: #d4a857;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .audio-control button:hover {
+            background-color: #d4a857;
+            color: #3d4b3a;
+        }
+
+        .audio-control span {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #d4a857;
+        }
          /* 🌟 Styles pour MOBILE */
 @media screen and (max-width: 768px) {
     body {
@@ -112,7 +142,16 @@
     </style>
 </head>
 <body>
-   <audio id="accueil_audio" src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/accueil_theme.mp3"></audio>
+    <!-- 🎵 Bouton de contrôle audio -->
+    <div class="audio-control">
+        <button id="toggleAudio">🔊</button>
+        <span>Pour une expérience immersive : Sound On</span>
+    </div>
+
+    <!-- 🎵 Audio -->
+    <audio id="accueil_audio" src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/accueil_theme.mp3" loop></audio>
+
+   
     <div class="background"></div>
     <div class="container">
 <h3>T&Co par Samantha Khelil</h3>
@@ -391,46 +430,53 @@ let revealElement = document.getElementById("reveal");
 revealElement.innerText = finalMessage;
 revealElement.classList.add("glowing-text"); // Ajoute l'effet lumineux
 
-// 🌟 Lecture automatique du son d'accueil (au premier clic utilisateur)
+        // 🎵 Gestion de l'audio avec bouton de contrôle
         document.addEventListener("DOMContentLoaded", function () {
             let audio = document.getElementById("accueil_audio");
+            let toggleAudioButton = document.getElementById("toggleAudio");
 
-            if (audio) {
-                document.body.addEventListener("click", function () {
-                    if (audio.paused) {
-                        audio.play().catch(error => console.log("🔇 Lecture bloquée, un clic utilisateur est requis."));
-                    }
-                }, { once: true });
-            }
+            toggleAudioButton.addEventListener("click", function () {
+                if (audio.paused) {
+                    audio.play();
+                    toggleAudioButton.textContent = "🔇";
+                } else {
+                    audio.pause();
+                    toggleAudioButton.textContent = "🔊";
+                }
+            });
         });
 
+            // ✅ Fonction pour choisir un profil et masquer la première section
+            window.chooseProfile = function(selectedProfile) {
+                document.getElementById("step1").style.display = "none";
+                document.getElementById("step2").style.display = "block";
+                document.getElementById("backButton").style.display = "block";
 
-// Fonction pour choisir un profil et stopper la musique d’accueil
-function chooseProfile(selectedProfile) {
-    profile = selectedProfile;
-    
-    let audio = document.getElementById("accueil_audio");
-    if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-    }
+            // 🔇 Couper la musique au choix du profil
+                if (!audio.paused) {
+                    audio.pause();
+                    toggleAudioButton.textContent = "🔊";
+                }
+            };
 
+    // 🔥 Affiche la section des questions
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
     document.getElementById("backButton").style.display = "block";
-    setQuestion(0);
+    
+    setTimeout(() => setQuestion(0), 300); // Petite pause pour éviter un blocage visuel
 }
 
-        // 🔙 Fonction de retour en arrière
-function goBack() {
-    if (answers.length > 0) {
-        answers.pop();
-        setQuestion(answers.length);
-    } else {
-        document.getElementById("step2").style.display = "none";
-        document.getElementById("step1").style.display = "block";
-        document.getElementById("backButton").style.display = "none";
-    }
+        // 🔙 Fonction pour revenir en arrière
+        function goBack() {
+            document.getElementById("step2").style.display = "none";
+            document.getElementById("step1").style.display = "block";
+            document.getElementById("backButton").style.display = "none";
+
+        // 🎵 Relancer l'audio si l'utilisateur revient en arrière
+                if (audio.paused) {
+                    audio.play();
+                    toggleAudioButton.textContent = "🔇";
 }
 
         // 🎯 Affichage de la phrase révélatrice
@@ -448,6 +494,25 @@ function goBack() {
         revealElement.style.transition = "opacity 2s ease-in-out";
         revealElement.style.opacity = "1";
     }, 500);
+
+    function isStorageAvailable(type) {
+    try {
+        let storage = window[type];
+        let testKey = '__test__';
+        storage.setItem(testKey, "test");
+        storage.removeItem(testKey);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Utilisation sécurisée :
+if (isStorageAvailable("localStorage")) {
+    localStorage.setItem("profilChoisi", profile);
+} else {
+    console.warn("🚨 LocalStorage bloqué, certaines fonctionnalités peuvent ne pas marcher.");
+}
 }
     </script>
 </body>
