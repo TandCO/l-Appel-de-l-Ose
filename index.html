@@ -114,7 +114,7 @@
     </style>
 </head>
 <body>
-    <audio id="accueil_audio" src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/accueil_theme.mp3"></audio>
+   <audio id="accueil_audio" src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/accueil_theme.mp3" autoplay muted></audio>
     <div class="background"></div>
     <div class="container">
 <h3>T&Co par Samantha Khelil</h3>
@@ -394,21 +394,41 @@ revealElement.innerText = finalMessage;
 revealElement.classList.add("glowing-text"); // Ajoute l'effet lumineux
 
 // 🌟 Effet d'apparition progressive de la révélation
+let revealElement = document.getElementById("reveal");
+revealElement.innerText = finalMessage;
+revealElement.classList.add("glowing-text"); // Ajoute l'effet lumineux
+
 revealElement.style.opacity = "0";
 setTimeout(() => {
     revealElement.style.transition = "opacity 2s ease-in-out";
     revealElement.style.opacity = "1";
 }, 500);
 
-// 🎶 Lecture automatique du son d'accueil (joué une seule fois)
-document.addEventListener('DOMContentLoaded', function () {
+// 🎶 Gestion du son d'accueil
+document.addEventListener("DOMContentLoaded", function () {
     let audio = document.getElementById("accueil_audio");
+
     if (audio) {
-        audio.play().catch(error => {
-            console.log("🔇 Lecture auto bloquée par le navigateur. Un clic utilisateur est nécessaire.");
-        });
+        let playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("🔇 Lecture auto bloquée. Un clic utilisateur est requis.");
+            });
+        }
     }
 });
+
+// 🔊 Débloquer l’audio au premier clic utilisateur (si bloqué par le navigateur)
+document.body.addEventListener("click", function () {
+    let audio = document.getElementById("accueil_audio");
+
+    if (audio && audio.paused) {
+        audio.play().catch(error => {
+            console.log("🔇 Toujours bloqué après le clic.");
+        });
+    }
+}, { once: true }); // Le déclencheur ne s'active qu'une seule fois
 
 // 🎯 Stoppe la musique d'accueil dès qu'un profil est sélectionné
 function chooseProfile(selectedProfile) {
