@@ -15,19 +15,17 @@
             overflow: hidden;
         }
 
-        .container {
-           
+       .container {
     max-width: 600px;
     margin: auto;
-    background: rgba(0, 0, 0, 0.7); /* Ajout de fond semi-transparent */
+    background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
     color: #d4a857; /* Texte en doré */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
     position: relative;
     z-index: 10;
-
-        }
+}
         .question, .result {
             display: none;
         }
@@ -114,7 +112,7 @@
     </style>
 </head>
 <body>
-   <audio id="accueil_audio" src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/accueil_theme.mp3" autoplay muted></audio>
+   <audio id="accueil_audio" src="https://raw.githubusercontent.com/TandCO/l-appel-de-l-ose/main/accueil_theme.mp3"></audio>
     <div class="background"></div>
     <div class="container">
 <h3>T&Co par Samantha Khelil</h3>
@@ -393,58 +391,63 @@ let revealElement = document.getElementById("reveal");
 revealElement.innerText = finalMessage;
 revealElement.classList.add("glowing-text"); // Ajoute l'effet lumineux
 
-// 🌟 Effet d'apparition progressive de la révélation
-let revealElement = document.getElementById("reveal");
-revealElement.innerText = finalMessage;
-revealElement.classList.add("glowing-text"); // Ajoute l'effet lumineux
+// 🌟 Lecture automatique du son d'accueil (au premier clic utilisateur)
+        document.addEventListener("DOMContentLoaded", function () {
+            let audio = document.getElementById("accueil_audio");
 
-revealElement.style.opacity = "0";
-setTimeout(() => {
-    revealElement.style.transition = "opacity 2s ease-in-out";
-    revealElement.style.opacity = "1";
-}, 500);
-
-// 🎶 Gestion du son d'accueil
-document.addEventListener("DOMContentLoaded", function () {
-    let audio = document.getElementById("accueil_audio");
-
-    if (audio) {
-        let playPromise = audio.play();
-
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                console.log("🔇 Lecture auto bloquée. Un clic utilisateur est requis.");
-            });
-        }
-    }
-});
-
-// 🔊 Débloquer l’audio au premier clic utilisateur (si bloqué par le navigateur)
-document.body.addEventListener("click", function () {
-    let audio = document.getElementById("accueil_audio");
-
-    if (audio && audio.paused) {
-        audio.play().catch(error => {
-            console.log("🔇 Toujours bloqué après le clic.");
+            if (audio) {
+                document.body.addEventListener("click", function () {
+                    if (audio.paused) {
+                        audio.play().catch(error => console.log("🔇 Lecture bloquée, un clic utilisateur est requis."));
+                    }
+                }, { once: true });
+            }
         });
-    }
-}, { once: true }); // Le déclencheur ne s'active qu'une seule fois
 
-// 🎯 Stoppe la musique d'accueil dès qu'un profil est sélectionné
+
+// Fonction pour choisir un profil et stopper la musique d’accueil
 function chooseProfile(selectedProfile) {
     profile = selectedProfile;
     
-    // 🛑 Stoppe le son d'accueil
     let audio = document.getElementById("accueil_audio");
     if (audio) {
         audio.pause();
-        audio.currentTime = 0; // Remet à zéro au cas où
+        audio.currentTime = 0;
     }
 
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
     document.getElementById("backButton").style.display = "block";
     setQuestion(0);
+}
+
+        // 🔙 Fonction de retour en arrière
+function goBack() {
+    if (answers.length > 0) {
+        answers.pop();
+        setQuestion(answers.length);
+    } else {
+        document.getElementById("step2").style.display = "none";
+        document.getElementById("step1").style.display = "block";
+        document.getElementById("backButton").style.display = "none";
+    }
+}
+
+        // 🎯 Affichage de la phrase révélatrice
+        function showResult() {
+            document.getElementById("step2").style.display = "none";
+            document.getElementById("result").style.display = "block";
+            document.getElementById("backButton").style.display = "none";
+
+            // 🌟 Effet lumineux et apparition progressive
+    let revealElement = document.getElementById("reveal");
+    revealElement.classList.add("glowing-text");
+    revealElement.style.opacity = "0";
+            
+    setTimeout(() => {
+        revealElement.style.transition = "opacity 2s ease-in-out";
+        revealElement.style.opacity = "1";
+    }, 500);
 }
     </script>
 </body>
